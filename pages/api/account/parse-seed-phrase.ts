@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import cors from '../../../middleware/cors';
+import runMiddleware from '../../../middleware/runMiddleware';
 const nearSeedPhrase = require('near-seed-phrase');
 
 type Data = {
@@ -27,10 +29,11 @@ type Data = {
  *              description: hello world
  */
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data | Error>
 ) {
+    await runMiddleware(req, res, cors);
     if (req.method != "POST") {
         return res.status(500).json({ name: "Error", message: "Not implemented" });
     }

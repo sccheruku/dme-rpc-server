@@ -2,6 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Account, Near, connect, ConnectConfig , keyStores} from "near-api-js";
 import { AccountBalance } from 'near-api-js/lib/account';
+import runMiddleware from '../../../middleware/runMiddleware';
+import cors from '../../../middleware/cors';
 
 const networkId = process.env.NEAR_NETWORK_ID!;
 const config: ConnectConfig = {
@@ -17,7 +19,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<AccountBalance | Error>
 ) {
-
+    await runMiddleware(req, res, cors);
     try {
         const accountId: string = req.query.accountId! as string;
         const near = await connect(config);
