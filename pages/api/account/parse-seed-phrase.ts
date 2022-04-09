@@ -9,7 +9,7 @@ type Data = {
 }
 
 /**
- * @swagger
+ * # @ swagger
  * /account/parse-seed-phrase:
  *   get:
  *      tags: 
